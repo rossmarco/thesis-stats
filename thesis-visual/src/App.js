@@ -89,11 +89,12 @@ class App extends Component {
           Welcome to Marco Ross' <code>2018 undergrad thesis</code> presented in
           React
         </p>
+        <p>Overall Classification Accuracy</p>
         <XYPlot width={500} height={500}>
           <HorizontalGridLines />
           <VerticalGridLines />
           <XAxis title="num of n-grams" position="start" />
-          <YAxis title="classification accuracy %" />
+
           <LineMarkSeries
             className="first-series"
             data={[
@@ -101,46 +102,53 @@ class App extends Component {
               { x: 50, y: 81.11 },
               { x: 100, y: 78.89 },
               { x: 200, y: 84.44 },
-              { x: 400, y: 73.33 }
+              { x: 400, y: 73.33 },
+              { x: 800, y: 68.89 }
             ]}
           />
           <LineMarkSeries
             className="second-series"
-            curve={"curveMonotoneX"}
-            data={[
-              { x: 25, y: 80 },
-              { x: 50, y: 81.11 },
-              { x: 100, y: 78.89 },
-              { x: 200, y: 84.44 },
-              { x: 400, y: 73.33 }
-            ]}
-          />
-          <LineMarkSeries
-            className="third-series"
-            curve={"curveMonotoneX"}
-            data={[
-              { x: 25, y: 78.89 },
-              { x: 50, y: 76.67 },
-              { x: 100, y: 78.89 },
-              { x: 200, y: 88.89 },
-              { x: 400, y: 87.78 }
-            ]}
-          />
-          <LineMarkSeries
-            className="fourth-series"
             curve={curveCatmullRom.alpha(0.5)}
             style={{
               // note that this can not be translated to the canvas version
               strokeDasharray: "2 2"
             }}
             data={[
-              { x: 25, y: 80 },
-              { x: 50, y: 80 },
-              { x: 100, y: 90 },
-              { x: 200, y: 77 },
-              { x: 400, y: 77 }
+              { x: 25, y: 78.89 },
+              { x: 50, y: 76.67 },
+              { x: 100, y: 78.89 },
+              { x: 200, y: 88.89 },
+              { x: 400, y: 87.78 },
+              { x: 800, y: 90.0 }
             ]}
           />
+          <LineMarkSeries
+            className="third-series"
+            curve={"curveMonotoneX"}
+            data={[
+              { x: 25, y: 60 },
+              { x: 50, y: 68.89 },
+              { x: 100, y: 71.11 },
+              { x: 200, y: 83.33 },
+              { x: 400, y: 86.67 },
+              { x: 800, y: 88.89 }
+            ]}
+          />
+          <LineMarkSeries
+            className="fourth-series"
+            curve={"curveMonotoneX"}
+            data={[
+              { x: 25, y: 34.33 },
+              { x: 50, y: 38.89 },
+              { x: 100, y: 64.44 },
+              { x: 200, y: 70.0 },
+              { x: 400, y: 80.0 },
+              { x: 800, y: 77.78 }
+            ]}
+          />
+          {/* Put the y axis down here because React produces components based on when they're called
+              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
+          <YAxis title="classification accuracy %" orientation="left" />
         </XYPlot>
         <DiscreteColorLegend
           orientation="horizontal"
