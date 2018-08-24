@@ -118,7 +118,7 @@ class App extends Component {
           and the
           <strong>
             <span style={{ color: "#FF9833" }}>
-              number of most frequently found n-grams
+              &nbsp;number of most frequently found n-grams
             </span>
           </strong>
           , this graph depicts the varrying degrees of accuracy resulting from
@@ -232,8 +232,10 @@ class App extends Component {
         </h4>
         <p className="graph-explanations">
           Average accuracy of manipulating{" "}
-          <span style={{ color: "#FF9833" }}>number of n-grams</span>, without
-          controlling for n-gram size
+          <span style={{ color: "#FF9833" }}>
+            <code>number of n-grams</code>
+          </span>
+          , without controlling for n-gram size
         </p>
         <div className="graphs">
           <XYPlot width={400} height={400} xType="ordinal" xDistance={100}>
