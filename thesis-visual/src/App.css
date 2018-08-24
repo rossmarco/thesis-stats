@@ -23,6 +23,25 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.legends {
+  display: flex;
+  justify-content: center;
+}
+
+.graphs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.graph-explanations {
+  word-wrap: break-word;
 }
