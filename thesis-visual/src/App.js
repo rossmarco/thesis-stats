@@ -15,6 +15,8 @@ import {
 import logo from "./logo.svg";
 import "./App.css";
 import "../node_modules/react-vis/dist/style.css";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { curveCatmullRom } from "d3-shape";
 import { EXTENDED_DISCRETE_COLOR_RANGE as COLORS } from "./theme";
 import {
@@ -152,19 +154,42 @@ class App extends Component {
     ];
 
     return (
-      <div className="App">
-        <header className="App-header" id="home">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Marco Ross</h1>
+      <div className="App" id="home">
+        <header className="App-header">
+          {/*           <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Marco Ross</h1> */}
+
+          <div className="headline">
+            <h1>
+              <span>MARCO ROSS</span>
+            </h1>
+            <h5>Undergraduate Computer Science Student</h5>
+          </div>
+          <p>
+            <span>
+              <IconButton
+                className={classes.button}
+                href="https://github.com/rossmarco"
+                id="icons"
+              >
+                <ion-icon name="logo-github" />
+              </IconButton>
+              <IconButton href="https://www.linkedin.com/in/marco-ross/">
+                <ion-icon name="logo-linkedin" id="icons" />
+              </IconButton>
+              <IconButton href="mailto:rosmarco@sheridancollege.ca">
+                <ion-icon name="mail" id="icons" />
+              </IconButton>
+            </span>
+          </p>
         </header>
         <div id="body">
           <div id="thesis">
+            <h1>Undergraduate Thesis</h1>
             <p className="App-intro" id="thesis">
               Marco Ross' <code>undergraduate thesis</code> 2018
             </p>
-            {/*Added the nav bar here*/}
-
-            <h4>Overall Classification Accuracy</h4>
+            <h3>Overall Classification Accuracy</h3>
             <p className="graph-explanations">
               Controlling for both
               <strong>
@@ -248,9 +273,9 @@ class App extends Component {
               />
             </div>
             <br />
-            <h4>
+            <h3>
               Average <span style={{ color: "#12939A" }}>n-gram</span> Accuracy
-            </h4>
+            </h3>
             <p className="graph-explanations">
               Average accuracy of manipulating{" "}
               <span style={{ color: "#FF9833" }}>
@@ -281,10 +306,10 @@ class App extends Component {
               />
             </div>
             <br />
-            <h4>
+            <h3>
               Average <span style={{ color: "#12939A" }}>n-gram frequency</span>{" "}
               Accuracy
-            </h4>
+            </h3>
             <p className="graph-explanations">
               Average accuracy of manipulating{" "}
               <span style={{ color: "#FF9833" }}>
@@ -328,9 +353,9 @@ class App extends Component {
                 items={NGRAM_SIZE}
               />
             </div>
-            <p className="graph-explanations">
+            <h3 className="graph-explanations">
               Accuracy of <code>bigrams</code>
-            </p>
+            </h3>
             <XYPlot width={300} height={300}>
               <VerticalGridLines />
               <HorizontalGridLines />
@@ -362,9 +387,9 @@ class App extends Component {
               <YAxis />
               <MarkSeries animation={MODE[modeIndex]} data={data} />
             </XYPlot>
-            <p className="graph-explanations">
+            <h3 className="graph-explanations">
               Research <code>source</code> distribution
-            </p>
+            </h3>
             <XYPlot
               xDomain={[-5, 5]}
               yDomain={[-5, 5]}
@@ -402,84 +427,132 @@ class App extends Component {
               />
             </XYPlot>
           </div>
-          <div className="workexperience" id="timeline">
-            <h4 id="work-experience">Work Experience</h4>
+          <div id="timeline">
+            <Element id="work-experience" />
+            <br />
+            <br />
+            <br />
+            <h1>Work Experience & Education</h1>
+            <p>
+              <span>Previous jobs and qualifications</span>
+            </p>
             <VerticalTimeline>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="May 2018 – Aug 2018"
+                iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+                icon={<ion-icon class="icons" name="briefcase" />}
+              >
+                <div id="work-experience-details">
+                  <h3 className="vertical-timeline-element-title">
+                    Junior Research Assistant
+                  </h3>
+                  <h4 className="vertical-timeline-element-subtitle">
+                    Sheridan College
+                  </h4>
+                  <h5>Oakville, ON</h5>
+                  {/*                 <img
+                  alt="rbc"
+                  src="rbc.png"
+                  style={{ width: 85, height: 110 }}
+                /> */}
+                  <p>
+                    <span>
+                      Python/React/HTML5/CSS
+                      <br />
+                      Python NLTK | NPM
+                    </span>
+                  </p>
+                </div>
+              </VerticalTimelineElement>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
                 date="May 2017 – Aug 2017"
                 iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
                 icon={<ion-icon class="icons" name="briefcase" />}
               >
-                <h3 className="vertical-timeline-element-title">
-                  Technical Systems Analyst (Co-op)
-                </h3>
-                <h4 className="vertical-timeline-element-subtitle">
-                  Toronto, ON
-                </h4>
-                <br />
-                <img
+                <div id="work-experience-details">
+                  <h3 className="vertical-timeline-element-title">
+                    Technical Systems Analyst (Co-op)
+                  </h3>
+                  <h4 className="vertical-timeline-element-subtitle">
+                    RBC Royal Bank
+                  </h4>
+                  <h5>Toronto, ON</h5>
+                  {/*                 <img
                   alt="rbc"
                   src="rbc.png"
                   style={{ width: 85, height: 110 }}
-                />
-                <p>
-                  <ul>
-                    <li>
-                      Responsible for the utilities development, installation
-                      and support for Transaction Processing and Database
-                      Management software on multiple platforms (z/OS, UNIX,
-                      Windows)
-                    </li>
-                    <li>
-                      Created a client/server application in C which sends and
-                      receives messages between two separate multi-threaded
-                      programs. This application interacted with existing
-                      message-oriented middleware through a private API
-                    </li>
-                    <li>
-                      Developed an employee facing web application for
-                      automating small tasks within the department. This
-                      application was built using the ASP.NET framework
-                      alongside Bootstrap
-                    </li>
-                  </ul>
-                </p>
+                /> */}
+                  <p>
+                    <span>
+                      ASP.NET/Java/C Development
+                      <br />
+                      z/OS | UNIX | Windows | EJB's
+                    </span>
+                  </p>
+                </div>
               </VerticalTimelineElement>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
-                date="2010 - 2011"
+                date="Jan 2017 - Apr 2017"
                 iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
                 icon={<ion-icon class="icons" name="briefcase" />}
               >
-                <h3 className="vertical-timeline-element-title">
-                  Art Director
-                </h3>
-                <h4 className="vertical-timeline-element-subtitle">
-                  San Francisco, CA
-                </h4>
-                <p>
-                  Creative Direction, User Experience, Visual Design, SEO,
-                  Online Marketing
-                </p>
+                <div id="work-experience-details">
+                  <h3 className="vertical-timeline-element-title">
+                    Quality Assurance Analyst (Co-op)
+                  </h3>
+                  <h4 className="vertical-timeline-element-subtitle">
+                    RBC Royal Bank
+                  </h4>
+                  <h5>Toronto, ON</h5>
+                  <p>
+                    <span>
+                      ASP.NET/Windows Forms (C#) Development
+                      <br />
+                      Entity Framework Core | Microsoft SQL | TFS | z/OS
+                    </span>
+                  </p>
+                </div>
               </VerticalTimelineElement>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
-                date="2008 - 2010"
+                date="2014 - Present"
                 iconStyle={{ background: "rgb(255, 0, 0)", color: "#fff" }}
                 icon={<ion-icon class="icons" name="school" />}
               >
-                <h3 className="vertical-timeline-element-title">
-                  Web Designer
-                </h3>
-                <h4 className="vertical-timeline-element-subtitle">
-                  Los Angeles, CA
-                </h4>
-                <p>User Experience, Visual Design</p>
+                <div id="work-experience-details">
+                  <h3
+                    className="vertical-timeline-element-title"
+                    id="education"
+                  >
+                    Bachelor of Applied Computer Science, Mobile Computing
+                  </h3>
+                  <br />
+                  <h4 className="vertical-timeline-element-subtitle">
+                    Sheridan College
+                  </h4>
+                </div>
+              </VerticalTimelineElement>
+              <VerticalTimelineElement
+                className="vertical-timeline-element--work"
+                date="2009 - 2012"
+                iconStyle={{ background: "rgb(255, 0, 0)", color: "#fff" }}
+                icon={<ion-icon class="icons" name="school" />}
+              >
+                <div id="work-experience-details">
+                  <h3 className="vertical-timeline-element-title">
+                    Bachelor of Health Sciences
+                  </h3>
+                  <br />
+                  <h4 className="vertical-timeline-element-subtitle">
+                    University of Western Ontario
+                  </h4>
+                </div>
               </VerticalTimelineElement>
             </VerticalTimeline>
           </div>
-          <div id="education" />
         </div>
         <BottomNavigation
           style={{
@@ -501,11 +574,7 @@ class App extends Component {
         >
           {/*RESUME HERE*/}
           <BottomNavigationAction label="Home" href="#home" icon={<Home />} />
-          <BottomNavigationAction
-            label="About Me"
-            href="#text-buttons"
-            icon={<Face />}
-          />
+          <BottomNavigationAction label="About Me" icon={<Face />} />
           <BottomNavigationAction
             label="Thesis"
             href="#thesis"
@@ -516,12 +585,12 @@ class App extends Component {
             href="#work-experience"
             icon={<Work />}
           />
-          <BottomNavigationAction label="Education" icon={<School />} />
           <BottomNavigationAction
-            label="Languages"
-            href="#thesis"
-            icon={<Language />}
+            label="Education"
+            href="#education"
+            icon={<School />}
           />
+          <BottomNavigationAction label="Languages" icon={<Language />} />
           <BottomNavigationAction label="Hobbies" icon={<Games />} />
         </BottomNavigation>
       </div>
