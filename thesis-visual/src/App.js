@@ -14,11 +14,14 @@ import {
 } from "@material-ui/icons";
 import logo from "./logo.svg";
 import "./App.css";
+import RBC_Logo from "./images/rbc.png";
+import Sheridan_Logo from "./images/sheridan.png";
+import Western_Logo from "./images/western.svg";
+import Marco from "./images/marco.jpg";
 import "../node_modules/react-vis/dist/style.css";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { curveCatmullRom } from "d3-shape";
-import { EXTENDED_DISCRETE_COLOR_RANGE as COLORS } from "./theme";
+import { EXTENDED_DISCRETE_COLOR_RANGE as COLORS } from "./components/theme";
 import {
   XYPlot,
   XAxis,
@@ -34,10 +37,11 @@ import {
   LineMarkSeriesCanvas,
   HorizontalBarSeries,
   HorizontalBarSeriesCanvas,
-  VerticalBarSeries
+  VerticalBarSeries,
+  RadialChart,
+  Hint,
+  Sunburst
 } from "react-vis";
-import { Button } from "@material-ui/core";
-import * as Scroll from "react-scroll";
 import {
   Link,
   Element,
@@ -58,9 +62,11 @@ const NGRAMS = ["Unigrams", "Bigrams", "Trigrams", "Quadgrams"];
 const NGRAM_SIZE = ["25", "50", "100", "200", "400", "800"];
 const styles = {
   root: {
-    width: 1000
+    width: "auto"
+    /**used to be 1000 */
   }
 };
+const radialData = [{ angle: 1 }, { angle: 5 }, { angle: 2 }];
 
 function generateData() {
   return [...new Array(10)].map(row => ({
@@ -105,18 +111,12 @@ function updateLittleData() {
   ];
 }
 
-{
-  /*New Scrollable stuff*/
-}
-
 class App extends Component {
   state = {
-    useCanvas: false,
-    /*data: generateData(),*/
     modeIndex: 3,
     data: updateData(),
     littleData: updateLittleData(),
-    value: 0
+    value: false
   };
   handleChange = (event, value) => {
     this.setState({ value });
@@ -133,11 +133,6 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    const { useCanvas } = this.state;
-    const Line = useCanvas ? LineSeriesCanvas : LineSeries;
-    const BarSeries = useCanvas
-      ? HorizontalBarSeriesCanvas
-      : HorizontalBarSeries;
     const { modeIndex, data } = this.state;
     const AVERAGE_NGRAMS = [
       { x: 1, y: 77.78, size: 3 },
@@ -160,9 +155,7 @@ class App extends Component {
           <h1 className="App-title">Marco Ross</h1> */}
 
           <div className="headline">
-            <h1>
-              <span>MARCO ROSS</span>
-            </h1>
+            <h1>MARCO ROSS</h1>
             <h5>Undergraduate Computer Science Student</h5>
           </div>
           <p>
@@ -184,252 +177,49 @@ class App extends Component {
           </p>
         </header>
         <div id="body">
-          <div id="thesis">
-            <h1>Undergraduate Thesis</h1>
-            <p className="App-intro" id="thesis">
-              Marco Ross' <code>undergraduate thesis</code> 2018
-            </p>
-            <h3>Overall Classification Accuracy</h3>
-            <p className="graph-explanations">
-              Controlling for both
-              <strong>
-                <span style={{ color: "#12939A" }}> n-gram size </span>
-              </strong>
-              and the
-              <strong>
-                <span style={{ color: "#FF9833" }}>
-                  &nbsp;number of most frequently found n-grams
-                </span>
-              </strong>
-              , this graph depicts the varrying degrees of accuracy resulting
-              from different combinations of these two variables
-            </p>
-            <div className="graphs">
-              <XYPlot width={400} height={400}>
-                <HorizontalGridLines />
-                <VerticalGridLines />
-                <XAxis title="num of n-grams" position="start" />
-                <LineMarkSeries
-                  className="first-series"
-                  data={[
-                    { x: 25, y: 80 },
-                    { x: 50, y: 81.11 },
-                    { x: 100, y: 78.89 },
-                    { x: 200, y: 84.44 },
-                    { x: 400, y: 73.33 },
-                    { x: 800, y: 68.89 }
-                  ]}
-                />
-                <LineMarkSeries
-                  className="second-series"
-                  curve={curveCatmullRom.alpha(0.5)}
-                  style={{
-                    // note that this can not be translated to the canvas version
-                    strokeDasharray: "2 2"
-                  }}
-                  data={[
-                    { x: 25, y: 78.89 },
-                    { x: 50, y: 76.67 },
-                    { x: 100, y: 78.89 },
-                    { x: 200, y: 88.89 },
-                    { x: 400, y: 87.78 },
-                    { x: 800, y: 90.0 }
-                  ]}
-                />
-                <LineMarkSeries
-                  className="third-series"
-                  curve={"curveMonotoneX"}
-                  data={[
-                    { x: 25, y: 60 },
-                    { x: 50, y: 68.89 },
-                    { x: 100, y: 71.11 },
-                    { x: 200, y: 83.33 },
-                    { x: 400, y: 86.67 },
-                    { x: 800, y: 88.89 }
-                  ]}
-                />
-                <LineMarkSeries
-                  className="fourth-series"
-                  curve={"curveMonotoneX"}
-                  data={[
-                    { x: 25, y: 34.33 },
-                    { x: 50, y: 38.89 },
-                    { x: 100, y: 64.44 },
-                    { x: 200, y: 70.0 },
-                    { x: 400, y: 80.0 },
-                    { x: 800, y: 77.78 }
-                  ]}
-                />
-                {/* Put the y axis down here because React produces components based on when they're called
-              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
-                <YAxis title="classification accuracy %" orientation="left" />
-              </XYPlot>
+          <div className="screenblock screenblock-container">
+            <div id="about-me">
+              <br />
+              <br />
+              <h1 id="subtitles">About Me</h1>
+              <h2 className="subheaders">Marco Ross</h2>
+              <h3 className="subheaders">
+                4th Year Computer Science Student from Toronto
+              </h3>
+              <div class="row">
+                <div class="column">
+                  <p>
+                    <span>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Integer placerat eros sapien, in commodo lectus semper
+                      vel. Fusce iaculis hendrerit nibh, eget eleifend mi
+                      dapibus eget. Mauris ornare ultrices quam tincidunt
+                      ultricies. Suspendisse sed feugiat neque. Maecenas lacinia
+                      accumsan massa a ullamcorper. Pellentesque urna mi,
+                      ultricies eu maximus sit amet, facilisis sagittis neque.
+                      Pellentesque eget nibh porta, dapibus enim nec, aliquet
+                      sapien. In hac habitasse platea dictumst. Quisque sodales
+                      quam metus, hendrerit molestie ipsum tempor vel. Praesent
+                      quis iaculis lorem, ac imperdiet neque.
+                    </span>
+                    <br />
+                    <br />
+                    <span>
+                      Pellentesque urna mi, ultricies eu maximus sit amet,
+                      facilisis sagittis neque. Pellentesque eget nibh porta,
+                      dapibus enim nec, aliquet sapien. In hac habitasse platea
+                      dictumst. Quisque sodales quam metus, hendrerit molestie
+                      ipsum tempor vel. Praesent quis iaculis lorem, ac
+                      imperdiet neque.
+                    </span>
+                  </p>
+                </div>
+                <img id="profile-pic" src={Marco} alt="marco" style={{}} />
+              </div>
             </div>
-            <div className="legends">
-              <DiscreteColorLegend
-                orientation="horizontal"
-                width={300}
-                items={NGRAMS}
-              />
-            </div>
-            <br />
-            <h3>
-              Average <span style={{ color: "#12939A" }}>n-gram</span> Accuracy
-            </h3>
-            <p className="graph-explanations">
-              Average accuracy of manipulating{" "}
-              <span style={{ color: "#FF9833" }}>
-                <code>n-gram size</code>
-              </span>
-              , without controlling for total number of n-grams
-            </p>
-            <div className="graphs">
-              <XYPlot width={400} height={400} xType="ordinal" xDistance={100}>
-                <HorizontalGridLines />
-                <VerticalGridLines />
-                {/*Edit this for bar graph*/}
-                <VerticalBarSeries data={[{ x: "n-grams", y: 77.78 }]} />
-                <VerticalBarSeries data={[{ x: "n-grams", y: 83.52 }]} />
-                <VerticalBarSeries data={[{ x: "n-grams", y: 76.48 }]} />
-                <VerticalBarSeries data={[{ x: "n-grams", y: 60.93 }]} />
-                <XAxis position="start" />
-                <YAxis title="accuracy %" />
-              </XYPlot>
-              {/* Put the y axis down here because React produces components based on when they're called
-              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
-            </div>
-            <div className="legends">
-              <DiscreteColorLegend
-                orientation="horizontal"
-                width={300}
-                items={NGRAMS}
-              />
-            </div>
-            <br />
-            <h3>
-              Average <span style={{ color: "#12939A" }}>n-gram frequency</span>{" "}
-              Accuracy
-            </h3>
-            <p className="graph-explanations">
-              Average accuracy of manipulating{" "}
-              <span style={{ color: "#FF9833" }}>
-                <code>number of n-grams</code>
-              </span>
-              , without controlling for n-gram size
-            </p>
-            <div className="graphs">
-              <XYPlot width={400} height={400} xType="ordinal" xDistance={100}>
-                <HorizontalGridLines />
-                <VerticalGridLines />
-                {/*Edit this for bar graph*/}
-                <VerticalBarSeries
-                  data={[{ x: "number of n-grams", y: 63.33 }]}
-                />
-                <VerticalBarSeries
-                  data={[{ x: "number of n-grams", y: 66.39 }]}
-                />
-                <VerticalBarSeries
-                  data={[{ x: "number of n-grams", y: 73.33 }]}
-                />
-                <VerticalBarSeries
-                  data={[{ x: "number of n-grams", y: 81.67 }]}
-                />
-                <VerticalBarSeries
-                  data={[{ x: "number of n-grams", y: 81.94 }]}
-                />
-                <VerticalBarSeries
-                  data={[{ x: "number of n-grams", y: 81.39 }]}
-                />
-                <XAxis position="start" />
-                <YAxis title="accuracy %" />
-              </XYPlot>
-              {/* Put the y axis down here because React produces components based on when they're called
-              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
-            </div>
-            <div className="legends">
-              <DiscreteColorLegend
-                orientation="horizontal"
-                width={300}
-                items={NGRAM_SIZE}
-              />
-            </div>
-            <h3 className="graph-explanations">
-              Accuracy of <code>bigrams</code>
-            </h3>
-            <XYPlot width={300} height={300}>
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis title="test2" position="start" />
-              <YAxis title="test" />
-              <MarkSeries
-                color="#FF9833"
-                className="mark-series-example"
-                strokeWidth={2}
-                opacity="0.8"
-                sizeRange={[5, 15]}
-                animation={MODE[modeIndex]}
-                data={AVERAGE_NGRAMS}
-              />
-              <MarkSeries
-                color="#12939A"
-                className="mark-series-example"
-                strokeWidth={2}
-                opacity="0.8"
-                sizeRange={[5, 15]}
-                animation={MODE[modeIndex]}
-                data={myTestData}
-              />
-            </XYPlot>
-            <XYPlot width={300} height={300}>
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis />
-              <YAxis />
-              <MarkSeries animation={MODE[modeIndex]} data={data} />
-            </XYPlot>
-            <h3 className="graph-explanations">
-              Research <code>source</code> distribution
-            </h3>
-            <XYPlot
-              xDomain={[-5, 5]}
-              yDomain={[-5, 5]}
-              width={300}
-              height={300}
-            >
-              <XAxis />
-              <YAxis />
-              <ArcSeries
-                animation
-                radiusDomain={[0, 4]}
-                data={this.state.data.map(row => {
-                  if (
-                    this.state.value &&
-                    this.state.value.color === row.color
-                  ) {
-                    return {
-                      ...row,
-                      style: { stroke: "black", strokeWidth: "5px" }
-                    };
-                  }
-                  return row;
-                })}
-                colorRange={COLORS}
-                onValueMouseOver={row => this.setState({ value: row })}
-                onSeriesMouseOut={() => this.setState({ value: false })}
-                colorType={"category"}
-              />
-              <ArcSeries
-                animation
-                radiusType={"literal"}
-                center={{ x: -2, y: 2 }}
-                data={this.state.littleData}
-                colorType={"literal"}
-              />
-            </XYPlot>
           </div>
-          <div id="timeline">
+          <div className="screenblock-container">
             <Element id="work-experience" />
-            <br />
             <br />
             <br />
             <h1>Work Experience & Education</h1>
@@ -451,16 +241,11 @@ class App extends Component {
                     Sheridan College
                   </h4>
                   <h5>Oakville, ON</h5>
-                  {/*                 <img
-                  alt="rbc"
-                  src="rbc.png"
-                  style={{ width: 85, height: 110 }}
-                /> */}
                   <p>
                     <span>
                       Python/React/HTML5/CSS
                       <br />
-                      Python NLTK | NPM
+                      Python NLTK | NPM | GitHub
                     </span>
                   </p>
                 </div>
@@ -479,17 +264,14 @@ class App extends Component {
                     RBC Royal Bank
                   </h4>
                   <h5>Toronto, ON</h5>
-                  {/*                 <img
-                  alt="rbc"
-                  src="rbc.png"
-                  style={{ width: 85, height: 110 }}
-                /> */}
+
                   <p>
                     <span>
                       ASP.NET/Java/C Development
                       <br />
                       z/OS | UNIX | Windows | EJB's
                     </span>
+                    <br />
                   </p>
                 </div>
               </VerticalTimelineElement>
@@ -518,15 +300,13 @@ class App extends Component {
               </VerticalTimelineElement>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
+                id="education"
                 date="2014 - Present"
                 iconStyle={{ background: "rgb(255, 0, 0)", color: "#fff" }}
                 icon={<ion-icon class="icons" name="school" />}
               >
                 <div id="work-experience-details">
-                  <h3
-                    className="vertical-timeline-element-title"
-                    id="education"
-                  >
+                  <h3 className="vertical-timeline-element-title">
                     Bachelor of Applied Computer Science, Mobile Computing
                   </h3>
                   <br />
@@ -549,36 +329,296 @@ class App extends Component {
                   <h4 className="vertical-timeline-element-subtitle">
                     University of Western Ontario
                   </h4>
+                  {/*                   <img
+                    alt="western"
+                    src={Western_Logo}
+                    style={{ width: 85, height: 85 }}
+                  /> */}
                 </div>
               </VerticalTimelineElement>
             </VerticalTimeline>
           </div>
         </div>
+        <div id="thesis">
+          <br />
+          <br />
+          <h1>Undergraduate Thesis</h1>
+          <p className="App-intro" id="thesis">
+            Marco Ross' <code>undergraduate thesis</code> 2018
+          </p>
+          <h3>Overall Classification Accuracy</h3>
+          <p className="graph-explanations">
+            Controlling for both
+            <strong>
+              <span style={{ color: "#12939A" }}> n-gram size </span>
+            </strong>
+            and the
+            <strong>
+              <span style={{ color: "#FF9833" }}>
+                &nbsp;number of most frequently found n-grams
+              </span>
+            </strong>
+            <span>
+              , this graph depicts the varrying degrees of accuracy resulting
+              from different combinations of these two variables
+            </span>
+          </p>
+          <div className="graphs">
+            <XYPlot width={400} height={400}>
+              <HorizontalGridLines />
+              <VerticalGridLines />
+              <XAxis title="num of n-grams" position="start" />
+              <LineMarkSeries
+                className="first-series"
+                data={[
+                  { x: 25, y: 80 },
+                  { x: 50, y: 81.11 },
+                  { x: 100, y: 78.89 },
+                  { x: 200, y: 84.44 },
+                  { x: 400, y: 73.33 },
+                  { x: 800, y: 68.89 }
+                ]}
+              />
+              <LineMarkSeries
+                className="second-series"
+                curve={curveCatmullRom.alpha(0.5)}
+                style={{
+                  // note that this can not be translated to the canvas version
+                  strokeDasharray: "2 2"
+                }}
+                data={[
+                  { x: 25, y: 78.89 },
+                  { x: 50, y: 76.67 },
+                  { x: 100, y: 78.89 },
+                  { x: 200, y: 88.89 },
+                  { x: 400, y: 87.78 },
+                  { x: 800, y: 90.0 }
+                ]}
+              />
+              <LineMarkSeries
+                className="third-series"
+                curve={"curveMonotoneX"}
+                data={[
+                  { x: 25, y: 60 },
+                  { x: 50, y: 68.89 },
+                  { x: 100, y: 71.11 },
+                  { x: 200, y: 83.33 },
+                  { x: 400, y: 86.67 },
+                  { x: 800, y: 88.89 }
+                ]}
+              />
+              <LineMarkSeries
+                className="fourth-series"
+                curve={"curveMonotoneX"}
+                data={[
+                  { x: 25, y: 34.33 },
+                  { x: 50, y: 38.89 },
+                  { x: 100, y: 64.44 },
+                  { x: 200, y: 70.0 },
+                  { x: 400, y: 80.0 },
+                  { x: 800, y: 77.78 }
+                ]}
+              />
+              {/* Put the y axis down here because React produces components based on when they're called
+              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
+              <YAxis title="classification accuracy %" orientation="left" />
+            </XYPlot>
+          </div>
+          <div className="legends">
+            <DiscreteColorLegend
+              orientation="horizontal"
+              width={300}
+              items={NGRAMS}
+            />
+          </div>
+          <br />
+          <h3>
+            Average <span style={{ color: "#12939A" }}>n-gram</span> Accuracy
+          </h3>
+          <p className="graph-explanations">
+            Average accuracy of manipulating{" "}
+            <span style={{ color: "#FF9833" }}>
+              <code>n-gram size</code>
+            </span>
+            , without controlling for total number of n-grams
+          </p>
+          <div className="graphs">
+            <XYPlot width={400} height={400} xType="ordinal" xDistance={100}>
+              <HorizontalGridLines />
+              <VerticalGridLines />
+              <VerticalBarSeries data={[{ x: "n-grams", y: 77.78 }]} />
+              <VerticalBarSeries data={[{ x: "n-grams", y: 83.52 }]} />
+              <VerticalBarSeries data={[{ x: "n-grams", y: 76.48 }]} />
+              <VerticalBarSeries data={[{ x: "n-grams", y: 60.93 }]} />
+              <XAxis position="start" />
+              <YAxis title="accuracy %" />
+            </XYPlot>
+            {/* Put the y axis down here because React produces components based on when they're called
+              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
+          </div>
+          <div className="legends">
+            <DiscreteColorLegend
+              orientation="horizontal"
+              width={300}
+              items={NGRAMS}
+            />
+          </div>
+          <br />
+          <h3>
+            Average <span style={{ color: "#12939A" }}>n-gram frequency</span>{" "}
+            Accuracy
+          </h3>
+          <p className="graph-explanations">
+            Average accuracy of manipulating{" "}
+            <span style={{ color: "#FF9833" }}>
+              <code>number of n-grams</code>
+            </span>
+            , without controlling for n-gram size
+          </p>
+          <div className="graphs">
+            <XYPlot width={400} height={400} xType="ordinal" xDistance={100}>
+              <HorizontalGridLines />
+              <VerticalGridLines />
+              <VerticalBarSeries
+                data={[{ x: "number of n-grams", y: 63.33 }]}
+              />
+              <VerticalBarSeries
+                data={[{ x: "number of n-grams", y: 66.39 }]}
+              />
+              <VerticalBarSeries
+                data={[{ x: "number of n-grams", y: 73.33 }]}
+              />
+              <VerticalBarSeries
+                data={[{ x: "number of n-grams", y: 81.67 }]}
+              />
+              <VerticalBarSeries
+                data={[{ x: "number of n-grams", y: 81.94 }]}
+              />
+              <VerticalBarSeries
+                data={[{ x: "number of n-grams", y: 81.39 }]}
+              />
+              <XAxis position="start" />
+              <YAxis title="accuracy %" />
+            </XYPlot>
+            {/* Put the y axis down here because React produces components based on when they're called
+              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
+          </div>
+          <div className="legends">
+            <DiscreteColorLegend
+              orientation="horizontal"
+              width={300}
+              items={NGRAM_SIZE}
+            />
+          </div>
+          <h3 className="graph-explanations">
+            Accuracy of <code>bigrams</code>
+          </h3>
+          <XYPlot width={300} height={300}>
+            <VerticalGridLines />
+            <HorizontalGridLines />
+            <XAxis title="test2" position="start" />
+            <YAxis title="test" />
+            <MarkSeries
+              color="#FF9833"
+              className="mark-series-example"
+              strokeWidth={2}
+              opacity="0.8"
+              sizeRange={[5, 15]}
+              animation={MODE[modeIndex]}
+              data={AVERAGE_NGRAMS}
+            />
+            <MarkSeries
+              color="#12939A"
+              className="mark-series-example"
+              strokeWidth={2}
+              opacity="0.8"
+              sizeRange={[5, 15]}
+              animation={MODE[modeIndex]}
+              data={myTestData}
+            />
+          </XYPlot>
+          <XYPlot width={300} height={300}>
+            <VerticalGridLines />
+            <HorizontalGridLines />
+            <XAxis />
+            <YAxis />
+            <MarkSeries animation={MODE[modeIndex]} data={data} />
+          </XYPlot>
+          <h3 className="graph-explanations">
+            Research <code>source</code> distribution
+          </h3>
+          <XYPlot xDomain={[-5, 5]} yDomain={[-5, 5]} width={300} height={300}>
+            <XAxis />
+            <YAxis />
+            <ArcSeries
+              animation
+              radiusDomain={[0, 4]}
+              data={this.state.data.map(row => {
+                if (this.state.value && this.state.value.color === row.color) {
+                  return {
+                    ...row,
+                    style: { stroke: "black", strokeWidth: "5px" }
+                  };
+                }
+                return row;
+              })}
+              colorRange={COLORS}
+              onValueMouseOver={row => this.setState({ value: row })}
+              onSeriesMouseOut={() => this.setState({ value: false })}
+              colorType={"category"}
+            />
+            <ArcSeries
+              animation
+              radiusType={"literal"}
+              center={{ x: -2, y: 2 }}
+              data={this.state.littleData}
+              colorType={"literal"}
+            />
+          </XYPlot>
+          {/* NEW STUFF */}
+          <div id="languages" style={{ textAlign: "center" }}>
+            <div className="screenblock screenblock-container">
+              <br />
+              <br />
+              <h1 id="subtitles">Languages</h1>
+              <h2>Natural Languages</h2>
+              <div className="languages-table">
+                <div className="languages-row">
+                  <div className="language-subtitle">
+                    <span className="language-title">English</span>
+                    <br />
+                    <span className="language-proficiency">Native</span>
+                  </div>
+                  <div className="dots-progress">
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot" />
+                    <div class="dot-empty" />
+                    <div class="dot-empty" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <BottomNavigation
-          style={{
-            justifyContent: "center",
-            alignContent: "center",
-            bottom: 0,
-            height: 56,
-            margin: 0,
-            position: "sticky",
-            flex: 1,
-            borderTop: "solid",
-            borderTopStyle: "solid",
-            borderTopColor: "#808080"
-          }}
+          id="bot-nav"
           showLabels
           value={value}
           onChange={this.handleChange}
           className={(classes.root, BottomNavigation)}
         >
-          {/*RESUME HERE*/}
           <BottomNavigationAction label="Home" href="#home" icon={<Home />} />
-          <BottomNavigationAction label="About Me" icon={<Face />} />
           <BottomNavigationAction
-            label="Thesis"
-            href="#thesis"
-            icon={<Code />}
+            label="About Me"
+            href="#about-me"
+            icon={<Face />}
           />
           <BottomNavigationAction
             label="Experience"
@@ -590,7 +630,16 @@ class App extends Component {
             href="#education"
             icon={<School />}
           />
-          <BottomNavigationAction label="Languages" icon={<Language />} />
+          <BottomNavigationAction
+            label="Thesis"
+            href="#thesis"
+            icon={<Code />}
+          />
+          <BottomNavigationAction
+            label="Languages"
+            href="#languages"
+            icon={<Language />}
+          />
           <BottomNavigationAction label="Hobbies" icon={<Games />} />
         </BottomNavigation>
       </div>
