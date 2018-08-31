@@ -94,21 +94,23 @@
   justify-content: center;
 }
 
+#home-icons {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+  padding: auto;
+}
+
 .screenblock {
-  display: flex;
   min-height: calc(100vh - 56px);
+  display: flex;
+  flex: 1 1;
   flex-direction: column;
   background-color: #dfdfdf;
   color: black;
-  display: flex;
-  flex: 1 1;
   justify-content: left;
   align-items: left;
   word-wrap: break-word;
-}
-
-.screenblock-container {
-  background-color: #dfdfdf;
 }
 
 #work-experience-details {
@@ -125,6 +127,17 @@
   background-color: white;
 }
 
+#thesis {
+  background-color: #fff;
+}
+
+#languages {
+  text-align: center;
+  flex: 1 1;
+  flex-direction: column;
+  display: block;
+}
+
 .headline {
   color: #fff;
   text-align: center;
@@ -138,7 +151,7 @@
   font-weight: 700;
 }
 
-#subtitles {
+h1 {
   justify-content: center;
   align-content: center;
   text-align: center;
@@ -189,12 +202,7 @@
   display: flex;
 }
 
-#languages {
-  display: flex;
-  flex: 1 1;
-}
-
-.language-subtitle {
+.languages-subtitle {
   justify-content: left;
   align-content: left;
   text-align: left;
@@ -214,13 +222,13 @@
   display: flex;
 }
 
-.language-title {
+.languages-title {
   text-transform: uppercase;
   font-weight: 500;
   text-align: left;
 }
 
-.language-proficiency {
+.languages-proficiency {
   color: red;
   width: 100%;
   text-align: left;
