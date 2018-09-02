@@ -132,20 +132,20 @@ class App extends Component {
           <div className="headline">
             <h1>MARCO ROSS</h1>
             <h5>Undergraduate Computer Science Student</h5>
+            <p>
+              <span>
+                <IconButton href="https://www.linkedin.com/in/marco-ross/">
+                  <ion-icon name="logo-linkedin" id="home-icons" />
+                </IconButton>
+                <IconButton href="https://github.com/rossmarco" id="home-icons">
+                  <ion-icon name="logo-github" />
+                </IconButton>
+                <IconButton href="mailto:rosmarco@sheridancollege.ca">
+                  <ion-icon name="mail" id="home-icons" />
+                </IconButton>
+              </span>
+            </p>
           </div>
-          <p>
-            <span>
-              <IconButton href="https://www.linkedin.com/in/marco-ross/">
-                <ion-icon name="logo-linkedin" id="home-icons" />
-              </IconButton>
-              <IconButton href="https://github.com/rossmarco" id="home-icons">
-                <ion-icon name="logo-github" />
-              </IconButton>
-              <IconButton href="mailto:rosmarco@sheridancollege.ca">
-                <ion-icon name="mail" id="home-icons" />
-              </IconButton>
-            </span>
-          </p>
         </header>
         <div id="body">
           <div className="screenblock">
@@ -574,7 +574,7 @@ class App extends Component {
               <br />
               <br />
               <h1>Languages</h1>
-              <h2 className="subheaders">Natural Languages</h2>
+              <h3 className="subheaders">Natural Languages</h3>
               <div className="languages-table">
                 <div className="languages-row">
                   <div className="languages-subtitle">
@@ -610,12 +610,13 @@ class App extends Component {
                     <div className="dot" />
                     <div className="dot" />
                     <div className="dot" />
-                    <div className="dot-empty" />
-                    <div className="dot-empty" />
+                    <div className="dot" />
+                    <div className="dot" />
                   </div>
                 </div>
               </div>
-              <h2 className="subheaders">Programming Languages</h2>
+              <h3 className="subheaders">Programming Languages</h3>
+              <div />
             </div>
           </div>
           <BottomNavigation
