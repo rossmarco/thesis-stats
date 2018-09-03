@@ -32,14 +32,21 @@ import {
   ArcSeries,
   DiscreteColorLegend,
   LineMarkSeries,
-  VerticalBarSeries
+  VerticalBarSeries,
+  CircularGridLines,
+  RadialChart,
+  RadarChart
 } from "react-vis";
 import {
   VerticalTimeline,
   VerticalTimelineElement
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
+import { format } from "d3-format";
 
+{
+  /* CONSTANTS */
+}
 const PI = Math.PI;
 const MODE = ["noWobble", "gentle", "wobbly", "stiff"];
 const NGRAMS = ["Unigrams", "Bigrams", "Trigrams", "Quadgrams"];
@@ -50,6 +57,100 @@ const styles = {
     /**used to be 1000 */
   }
 };
+
+const RESEARCH_DIST_DATA = [
+  {
+    angle: 1,
+    subLabel: "JAMA",
+    id: 1,
+    radius: 10
+  },
+  {
+    angle: 2,
+    subLabel: "American Diabetes Association",
+    id: 2,
+    radius: 20
+  },
+  {
+    angle: 3,
+    label: "NEJM",
+    id: 3,
+    radius: 5
+  },
+  {
+    angle: 4,
+    label: "Lancet",
+    id: 4,
+    radius: 14
+  },
+  {
+    angle: 5,
+    subLabel: "BMJ",
+    id: 5,
+    radius: 12
+  },
+  {
+    angle: 5,
+    subLabel: "ADD",
+    id: 5,
+    radius: 12
+  }
+];
+
+const WORD_CORPUS_DATA = [
+  {
+    name: "Mercedes",
+    mileage: 7,
+    price: 10,
+    safety: 8,
+    performance: 9,
+    interior: 7,
+    warranty: 7
+  },
+  {
+    name: "Honda",
+    mileage: 8,
+    price: 6,
+    safety: 9,
+    performance: 6,
+    interior: 3,
+    warranty: 9
+  },
+  {
+    name: "Chevrolet",
+    mileage: 5,
+    price: 4,
+    safety: 6,
+    performance: 4,
+    interior: 5,
+    warranty: 6
+  }
+];
+
+const basicFormat = format(".2r");
+const wideFormat = format(".3r");
+
+const RADAR_PROPS = [
+  {
+    explosions: 7,
+    wow: 10,
+    dog: 8,
+    sickMoves: 9,
+    nice: 7
+  }
+];
+
+const DOMAIN = [
+  { name: "nice", domain: [0, 100], tickFormat: t => t },
+  { name: "explosions", domain: [6.9, 7.1] },
+  { name: "wow", domain: [0, 11] },
+  { name: "dog", domain: [0, 16] },
+  { name: "sickMoves", domain: [0, 20] }
+];
+
+{
+  /* FUNCTIONS */
+}
 
 function generateData() {
   return [...new Array(10)].map(row => ({
@@ -94,18 +195,30 @@ function updateLittleData() {
   ];
 }
 
+function mapData(hoveredSection) {
+  return RESEARCH_DIST_DATA.map((row, index) => {
+    return {
+      ...row,
+      innerRadius: hoveredSection === index + 1 ? row.radius - 1 : null,
+      opacity: !hoveredSection || hoveredSection === index + 1 ? 1 : 0.6
+    };
+  });
+}
+
 class App extends Component {
   state = {
     modeIndex: 3,
     data: updateData(),
     littleData: updateLittleData(),
-    value: false
+    value: false,
+    hoveredSection: false
   };
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
   render() {
+    const { hoveredSection } = this.state;
     const { classes } = this.props;
     const { value } = this.state;
     const { modeIndex, data } = this.state;
@@ -153,35 +266,52 @@ class App extends Component {
               <br />
               <br />
               <h1>About Me</h1>
-              <h2 className="subheaders">Marco Ross</h2>
-              <h3 className="subheaders">
+              <p className="descriptions">
+                <span>A small introduction about myself</span>
+              </p>
+              <h2 className="about-me-subheaders">Marco Ross</h2>
+              <h3 className="about-me-subheaders">
                 4th Year Computer Science Student from Toronto
               </h3>
               <div className="row">
-                <div className="column">
+                <div className="columns">
                   <p>
                     <span>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Integer placerat eros sapien, in commodo lectus semper
-                      vel. Fusce iaculis hendrerit nibh, eget eleifend mi
-                      dapibus eget. Mauris ornare ultrices quam tincidunt
-                      ultricies. Suspendisse sed feugiat neque. Maecenas lacinia
-                      accumsan massa a ullamcorper. Pellentesque urna mi,
-                      ultricies eu maximus sit amet, facilisis sagittis neque.
-                      Pellentesque eget nibh porta, dapibus enim nec, aliquet
-                      sapien. In hac habitasse platea dictumst. Quisque sodales
-                      quam metus, hendrerit molestie ipsum tempor vel. Praesent
-                      quis iaculis lorem, ac imperdiet neque.
+                      Fourth year computer science student from the Greater
+                      Toronto Area. Have just under one year of work experience
+                      at RBC Royal Bank designing enterprise web applications as
+                      well as research experience through Sheridan College.
                     </span>
                     <br />
                     <br />
                     <span>
-                      Pellentesque urna mi, ultricies eu maximus sit amet,
-                      facilisis sagittis neque. Pellentesque eget nibh porta,
-                      dapibus enim nec, aliquet sapien. In hac habitasse platea
-                      dictumst. Quisque sodales quam metus, hendrerit molestie
-                      ipsum tempor vel. Praesent quis iaculis lorem, ac
-                      imperdiet neque.
+                      Adept at designing and developing full stack web and
+                      mobile applications, with a special focus on ASP.NET,
+                      ReactJS, Python and Java.
+                    </span>
+                    <br />
+                    <br />
+                    <span>
+                      I have a particular interest in artificial intelligence
+                      research, specifically related to natural language
+                      processing within the healthcare domain. Currently
+                      completing an undergraduate thesis which involves using
+                      NLP to classify medical texts. Able to achieve a&nbsp;
+                      <span style={{ color: "#FF9833" }}>
+                        <b>91.11%</b>
+                      </span>
+                      &nbsp;accuracy using n-grams to classify texts through the
+                      Python Natural Language Toolkit (NLTK), utilizing a corpus
+                      of over{" "}
+                      <span style={{ color: "#1A3177" }}>1.5 million</span>
+                      &nbsp;words for training. More information on my thesis
+                      can be found at &nbsp;
+                      <a
+                        href="https://github.com/rossmarco/thesis"
+                        target={"_blank"}
+                      >
+                        GitHub
+                      </a>
                     </span>
                   </p>
                 </div>
@@ -201,7 +331,7 @@ class App extends Component {
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
                   date="May 2018 – Aug 2018"
-                  iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+                  iconStyle={{ background: "#12939A", color: "#fff" }}
                   icon={<ion-icon class="icons" name="briefcase" />}
                 >
                   <div id="work-experience-details">
@@ -224,7 +354,7 @@ class App extends Component {
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
                   date="May 2017 – Aug 2017"
-                  iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+                  iconStyle={{ background: "#12939A", color: "#fff" }}
                   icon={<ion-icon class="icons" name="briefcase" />}
                 >
                   <div id="work-experience-details">
@@ -249,7 +379,7 @@ class App extends Component {
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
                   date="Jan 2017 - Apr 2017"
-                  iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+                  iconStyle={{ background: "#12939A", color: "#fff" }}
                   icon={<ion-icon class="icons" name="briefcase" />}
                 >
                   <div id="work-experience-details">
@@ -273,7 +403,7 @@ class App extends Component {
                   className="vertical-timeline-element--work"
                   id="education"
                   date="2014 - Present"
-                  iconStyle={{ background: "rgb(255, 0, 0)", color: "#fff" }}
+                  iconStyle={{ background: "#FF9833", color: "#fff" }}
                   icon={<ion-icon class="icons" name="school" />}
                 >
                   <div id="work-experience-details">
@@ -289,7 +419,7 @@ class App extends Component {
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
                   date="2009 - 2012"
-                  iconStyle={{ background: "rgb(255, 0, 0)", color: "#fff" }}
+                  iconStyle={{ background: "#FF9833", color: "#fff" }}
                   icon={<ion-icon class="icons" name="school" />}
                 >
                   <div id="work-experience-details">
@@ -315,9 +445,6 @@ class App extends Component {
               <br />
               <br />
               <h1>Undergraduate Thesis</h1>
-              <p className="App-intro" id="thesis">
-                Marco Ross' <code>undergraduate thesis</code> 2018
-              </p>
               <h3>Overall Classification Accuracy</h3>
               <p className="graph-explanations">
                 Controlling for both
@@ -331,8 +458,9 @@ class App extends Component {
                   </span>
                 </strong>
                 <span>
-                  , this graph depicts the varrying degrees of accuracy
-                  resulting from different combinations of these two variables
+                  , <br />
+                  this graph depicts the varrying degrees of accuracy resulting
+                  from different combinations of these two variables
                 </span>
               </p>
               <div className="graphs">
@@ -399,7 +527,7 @@ class App extends Component {
               <div className="legends">
                 <DiscreteColorLegend
                   orientation="horizontal"
-                  width={300}
+                  width={350}
                   items={NGRAMS}
                 />
               </div>
@@ -410,10 +538,8 @@ class App extends Component {
               </h3>
               <p className="graph-explanations">
                 Average accuracy of manipulating{" "}
-                <span style={{ color: "#FF9833" }}>
-                  <code>n-gram size</code>
-                </span>
-                , without controlling for total number of n-grams
+                <span style={{ color: "#FF9833" }}>n-gram size</span>, without
+                controlling for total number of n-grams
               </p>
               <div className="graphs">
                 <XYPlot
@@ -437,7 +563,7 @@ class App extends Component {
               <div className="legends">
                 <DiscreteColorLegend
                   orientation="horizontal"
-                  width={300}
+                  width={350}
                   items={NGRAMS}
                 />
               </div>
@@ -449,10 +575,8 @@ class App extends Component {
               </h3>
               <p className="graph-explanations">
                 Average accuracy of manipulating{" "}
-                <span style={{ color: "#FF9833" }}>
-                  <code>number of n-grams</code>
-                </span>
-                , without controlling for n-gram size
+                <span style={{ color: "#FF9833" }}>number of n-grams</span>,
+                without controlling for n-gram size
               </p>
               <div className="graphs">
                 <XYPlot
@@ -490,11 +614,11 @@ class App extends Component {
               <div className="legends">
                 <DiscreteColorLegend
                   orientation="horizontal"
-                  width={300}
+                  width={350}
                   items={NGRAM_SIZE}
                 />
               </div>
-              <h3 className="graph-explanations">
+              {/* <h3 className="graph-explanations">
                 Accuracy of <code>bigrams</code>
               </h3>
               <XYPlot width={300} height={300}>
@@ -566,15 +690,122 @@ class App extends Component {
                   data={this.state.littleData}
                   colorType={"literal"}
                 />
-              </XYPlot>
+              </XYPlot> */}
+              <h3>Training/Test Data Sources</h3>
+              <p>
+                The medical journal distribution of the 300 research articles
+                used in this research
+              </p>
+              <div className="graphs">
+                <RadialChart
+                  animation
+                  showLabels
+                  radiusDomain={[0, 20]}
+                  data={mapData(hoveredSection)}
+                  labelsAboveChildren
+                  onValueMouseOver={row =>
+                    this.setState({ hoveredSection: row.id })
+                  }
+                  onMouseLeave={() => this.setState({ hoveredSection: false })}
+                  width={600}
+                  height={300}
+                >
+                  <CircularGridLines tickTotal={20} rRange={[0, 150]} />
+                </RadialChart>
+              </div>
+
+              <h3>Training Word Corpus Distribution</h3>
+              <p className="graph-explanations">
+                Breaking down the corpus of words used for training the
+                classification algorithm
+              </p>
+              <div className="graphs">
+                <RadarChart
+                  data={WORD_CORPUS_DATA}
+                  tickFormat={t => wideFormat(t)}
+                  startingAngle={0}
+                  domains={[
+                    { name: "mileage", domain: [0, 10] },
+                    {
+                      name: "price",
+                      domain: [2, 16],
+                      tickFormat: t => `$${basicFormat(t)}`,
+                      getValue: d => d.price
+                    },
+                    {
+                      name: "safety",
+                      domain: [5, 10],
+                      getValue: d => d.safety
+                    },
+                    {
+                      name: "performance",
+                      domain: [0, 10],
+                      getValue: d => d.performance
+                    },
+                    {
+                      name: "interior",
+                      domain: [0, 7],
+                      getValue: d => d.interior
+                    },
+                    {
+                      name: "warranty",
+                      domain: [10, 2],
+                      getValue: d => d.warranty
+                    }
+                  ]}
+                  width={500}
+                  height={400}
+                />
+              </div>
+              <h3>Test</h3>
+              <p className="graph-explanations">Some test words</p>
+              <div className="graphs">
+                <RadarChart
+                  animation
+                  data={RADAR_PROPS}
+                  domains={DOMAIN}
+                  style={{
+                    polygons: {
+                      fillOpacity: 0,
+                      strokeWidth: 3
+                    },
+                    axes: {
+                      text: {
+                        opacity: 1
+                      }
+                    },
+                    labels: {
+                      textAnchor: "middle"
+                    }
+                  }}
+                  margin={{
+                    left: 30,
+                    top: 30,
+                    bottom: 40,
+                    right: 50
+                  }}
+                  tickFormat={t => ""}
+                  width={400}
+                  height={300}
+                >
+                  <CircularGridLines
+                    tickValues={[...new Array(10)].map((v, i) => i / 10 - 1)}
+                  />
+                </RadarChart>
+              </div>
             </div>
           </div>
+          <br />
+          <br />
           <div className="screenblock">
             <div id="languages">
               <br />
               <br />
-              <h1>Languages</h1>
-              <h3 className="subheaders">Natural Languages</h3>
+              <h1 className="subtitles">Languages</h1>
+              <p>
+                <span>I speak and understand</span>
+              </p>
+              <br />
               <div className="languages-table">
                 <div className="languages-row">
                   <div className="languages-subtitle">
@@ -591,13 +822,13 @@ class App extends Component {
                     <div className="dot" />
                     <div className="dot" />
                     <div className="dot" />
-                    <div className="dot-empty" />
-                    <div className="dot-empty" />
+                    <div className="dot" />
+                    <div className="dot" />
                   </div>
                 </div>
                 <div className="languages-row">
                   <div className="languages-subtitle">
-                    <span className="languages-title">Arabic</span>
+                    <span className="languages-title">العربية</span>
                     <br />
                     <span className="languages-proficiency">Native</span>
                   </div>
@@ -614,11 +845,36 @@ class App extends Component {
                     <div className="dot" />
                   </div>
                 </div>
+                <div className="languages-row">
+                  <div className="languages-subtitle">
+                    <span className="languages-title">Español</span>
+                    <br />
+                    <span className="languages-proficiency">
+                      Limited working proficiency
+                    </span>
+                  </div>
+                  <div className="dots-progress">
+                    <div className="dot" />
+                    <div className="dot" />
+                    <div className="dot" />
+                    <div className="dot" />
+                    <div className="dot" />
+                    <div className="dot-empty" />
+                    <div className="dot-empty" />
+                    <div className="dot-empty" />
+                    <div className="dot-empty" />
+                    <div className="dot-empty" />
+                  </div>
+                </div>
               </div>
-              <h3 className="subheaders">Programming Languages</h3>
               <div />
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
+
           <BottomNavigation
             id="bot-nav"
             showLabels
@@ -652,7 +908,7 @@ class App extends Component {
               href="#languages"
               icon={<Language />}
             />
-            <BottomNavigationAction label="Hobbies" icon={<Games />} />
+            {/*             <BottomNavigationAction label="Hobbies" icon={<Games />} /> */}
           </BottomNavigation>
         </div>
       </div>

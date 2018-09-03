@@ -83,8 +83,10 @@
 
 .graphs {
   display: flex;
+  flex: 0 1;
   justify-content: center;
-  align-items: center;
+  align-content: center;
+  padding: 0 10px;
 }
 
 .graph-explanations {
@@ -129,12 +131,27 @@
   justify-content: left;
   align-content: left;
   text-align: left;
-  color: #1a3177;
-  background-color: white;
+  color: white;
+  background-color: #12939a;
+}
+
+.descriptions {
+  text-align: center;
+}
+
+.about-me-subheaders {
+  justify-content: left;
+  align-content: left;
+  text-align: left;
+  padding-left: 2%;
 }
 
 #thesis {
   background-color: #fff;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 #languages {
@@ -162,18 +179,19 @@
   border: 1px solid #fff;
 }
 
-h1 {
+h1,
+h2 {
   justify-content: center;
   align-content: center;
   text-align: center;
 }
 
 /* Three image containers (use 25% for four, and 50% for two, etc) */
-.column {
+.columns {
   float: left;
   width: 50%;
   padding: 5px;
-  padding-left: 20px;
+  padding-left: 2%;
 }
 
 /* Clear floats after image containers */
@@ -185,12 +203,8 @@ h1 {
   padding-right: 20px;
 }
 
-.subheaders {
-  padding-left: 20px;
-}
-
 .dot {
-  background-color: #ff3232;
+  background-color: #12939a;
   border-radius: 50%;
   display: inline-block;
   margin: 0 10px;
@@ -240,7 +254,7 @@ h1 {
 }
 
 .languages-proficiency {
-  color: red;
+  color: #12939a;
   width: 100%;
   text-align: left;
 }
@@ -250,6 +264,6 @@ h1 {
   border: white solid 1px;
   width: 300px;
   height: 400px;
-  padding-left: 30px;
+  padding-left: 50px;
   padding-bottom: 30px;
 }
