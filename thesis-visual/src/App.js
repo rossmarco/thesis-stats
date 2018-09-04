@@ -1,25 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import "./App.css";
+import Marco from "./images/marco.jpg";
 import { withStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import {
-  Home,
-  Code,
-  Language,
-  School,
-  Work,
-  Face,
-  Games
-} from "@material-ui/icons";
-import logo from "./logo.svg";
-import "./App.css";
-import RBC_Logo from "./images/rbc.png";
-import Sheridan_Logo from "./images/sheridan.png";
-import Western_Logo from "./images/western.svg";
-import Marco from "./images/marco.jpg";
-import "../node_modules/react-vis/dist/style.css";
+import { Home, Code, Language, School, Work, Face } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
+import "../node_modules/react-vis/dist/style.css";
 import { curveCatmullRom } from "d3-shape";
 import { EXTENDED_DISCRETE_COLOR_RANGE as COLORS } from "./components/theme";
 import {
@@ -28,8 +16,6 @@ import {
   YAxis,
   HorizontalGridLines,
   VerticalGridLines,
-  MarkSeries,
-  ArcSeries,
   DiscreteColorLegend,
   LineMarkSeries,
   VerticalBarSeries,
@@ -42,13 +28,11 @@ import {
   VerticalTimelineElement
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { format } from "d3-format";
 
 {
   /* CONSTANTS */
 }
 const PI = Math.PI;
-const MODE = ["noWobble", "gentle", "wobbly", "stiff"];
 const NGRAMS = ["Unigrams", "Bigrams", "Trigrams", "Quadgrams"];
 const NGRAM_SIZE = ["25", "50", "100", "200", "400", "800"];
 const styles = {
@@ -57,7 +41,6 @@ const styles = {
     /**used to be 1000 */
   }
 };
-
 const RESEARCH_DIST_DATA = [
   {
     angle: 1,
@@ -96,69 +79,22 @@ const RESEARCH_DIST_DATA = [
     radius: 12
   }
 ];
-
-const WORD_CORPUS_DATA = [
-  {
-    name: "Mercedes",
-    mileage: 7,
-    price: 10,
-    safety: 8,
-    performance: 9,
-    interior: 7,
-    warranty: 7
-  },
-  {
-    name: "Honda",
-    mileage: 8,
-    price: 6,
-    safety: 9,
-    performance: 6,
-    interior: 3,
-    warranty: 9
-  },
-  {
-    name: "Chevrolet",
-    mileage: 5,
-    price: 4,
-    safety: 6,
-    performance: 4,
-    interior: 5,
-    warranty: 6
-  }
-];
-
-const basicFormat = format(".2r");
-const wideFormat = format(".3r");
-
 const RADAR_PROPS = [
   {
-    explosions: 7,
-    wow: 10,
-    dog: 8,
-    sickMoves: 9,
-    nice: 7
+    diabetes: 704068,
+    CVD: 612992,
+    cancer: 489643
   }
 ];
-
 const DOMAIN = [
-  { name: "nice", domain: [0, 100], tickFormat: t => t },
-  { name: "explosions", domain: [6.9, 7.1] },
-  { name: "wow", domain: [0, 11] },
-  { name: "dog", domain: [0, 16] },
-  { name: "sickMoves", domain: [0, 20] }
+  { name: "diabetes", domain: [0, 710000], tickFormat: t => t },
+  { name: "CVD", domain: [0, 710000] },
+  { name: "cancer", domain: [0, 1000000] }
 ];
 
 {
   /* FUNCTIONS */
 }
-
-function generateData() {
-  return [...new Array(10)].map(row => ({
-    x: Math.random() * 5,
-    y: Math.random() * 10
-  }));
-}
-
 function updateData() {
   const divider = Math.floor(Math.random() * 8 + 3);
   const newData = [...new Array(5)].map((row, index) => {
@@ -174,7 +110,6 @@ function updateData() {
     { angle0: 0, angle: PI * 2 * Math.random(), radius: 1.1, radius0: 0.8 }
   ]);
 }
-
 function updateLittleData() {
   const portion = Math.random();
   return [
@@ -194,7 +129,6 @@ function updateLittleData() {
     }
   ];
 }
-
 function mapData(hoveredSection) {
   return RESEARCH_DIST_DATA.map((row, index) => {
     return {
@@ -216,32 +150,18 @@ class App extends Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
+  constructor() {
+    super();
+    this.state = { index: null };
+  }
 
   render() {
     const { hoveredSection } = this.state;
-    const { classes } = this.props;
     const { value } = this.state;
-    const { modeIndex, data } = this.state;
-    const AVERAGE_NGRAMS = [
-      { x: 1, y: 77.78, size: 3 },
-      { x: 2, y: 83.52, size: 3 },
-      { x: 3, y: 76.48, size: 3 },
-      { x: 4, y: 60.93, size: 3 }
-    ];
-    const myTestData = [
-      { x: 1, y: 10, size: 30 },
-      { x: 1.7, y: 12, size: 10 },
-      { x: 2, y: 5, size: 1 },
-      { x: 3, y: 15, size: 12 },
-      { x: 2.5, y: 7, size: 4 }
-    ];
 
     return (
       <div className="App" id="home">
         <header className="App-header">
-          {/*           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Marco Ross</h1> */}
-
           <div className="headline">
             <h1>MARCO ROSS</h1>
             <h5>Undergraduate Computer Science Student</h5>
@@ -271,16 +191,17 @@ class App extends Component {
               </p>
               <h2 className="about-me-subheaders">Marco Ross</h2>
               <h3 className="about-me-subheaders">
-                4th Year Computer Science Student from Toronto
+                Computer Science Student from Toronto, Canada
               </h3>
               <div className="row">
                 <div className="columns">
                   <p>
                     <span>
-                      Fourth year computer science student from the Greater
-                      Toronto Area. Have just under one year of work experience
-                      at RBC Royal Bank designing enterprise web applications as
-                      well as research experience through Sheridan College.
+                      I'm a Fourth year computer science student from the
+                      Greater Toronto Area. Have just under one year of work
+                      experience at RBC Royal Bank designing enterprise web
+                      applications as well as research experience through
+                      Sheridan College.
                     </span>
                     <br />
                     <br />
@@ -294,16 +215,18 @@ class App extends Component {
                     <span>
                       I have a particular interest in artificial intelligence
                       research, specifically related to natural language
-                      processing within the healthcare domain. Currently
-                      completing an undergraduate thesis which involves using
-                      NLP to classify medical texts. Able to achieve a&nbsp;
-                      <span style={{ color: "#FF9833" }}>
+                      processing within the healthcare domain.
+                      <br />
+                      <br />I am currently completing an undergraduate thesis
+                      which involves using NLP to classify medical texts. Able
+                      to achieve a&nbsp;
+                      <span style={{ color: "#000000" }}>
                         <b>91.11%</b>
                       </span>
                       &nbsp;accuracy using n-grams to classify texts through the
                       Python Natural Language Toolkit (NLTK), utilizing a corpus
-                      of over{" "}
-                      <span style={{ color: "#1A3177" }}>1.5 million</span>
+                      of over&nbsp;
+                      <span style={{ color: "#000000" }}>1.8 million</span>
                       &nbsp;words for training. More information on my thesis
                       can be found at &nbsp;
                       <a
@@ -315,8 +238,12 @@ class App extends Component {
                     </span>
                   </p>
                 </div>
-                <img id="profile-pic" src={Marco} alt="marco" style={{}} />
+                <img id="profile-pic" src={Marco} alt="marco" />
               </div>
+              <br />
+              <br />
+              <br />
+              <br />
             </div>
           </div>
           <div className="screenblock">
@@ -430,11 +357,6 @@ class App extends Component {
                     <h4 className="vertical-timeline-element-subtitle">
                       University of Western Ontario
                     </h4>
-                    {/*                   <img
-                    alt="western"
-                    src={Western_Logo}
-                    style={{ width: 85, height: 85 }}
-                  /> */}
                   </div>
                 </VerticalTimelineElement>
               </VerticalTimeline>
@@ -533,12 +455,12 @@ class App extends Component {
               </div>
               <br />
               <h3>
-                Average <span style={{ color: "#12939A" }}>n-gram</span>{" "}
+                Average <span style={{ color: "#12939A" }}> n-gram </span>
                 Accuracy
               </h3>
               <p className="graph-explanations">
-                Average accuracy of manipulating{" "}
-                <span style={{ color: "#FF9833" }}>n-gram size</span>, without
+                Average accuracy of manipulating
+                <span style={{ color: "#FF9833" }}> n-gram size</span>, without
                 controlling for total number of n-grams
               </p>
               <div className="graphs">
@@ -550,7 +472,10 @@ class App extends Component {
                 >
                   <HorizontalGridLines />
                   <VerticalGridLines />
-                  <VerticalBarSeries data={[{ x: "n-grams", y: 77.78 }]} />
+                  <VerticalBarSeries
+                    data={[{ x: "n-grams", y: 77.78 }]}
+                    onValueMouseOver
+                  />
                   <VerticalBarSeries data={[{ x: "n-grams", y: 83.52 }]} />
                   <VerticalBarSeries data={[{ x: "n-grams", y: 76.48 }]} />
                   <VerticalBarSeries data={[{ x: "n-grams", y: 60.93 }]} />
@@ -569,13 +494,13 @@ class App extends Component {
               </div>
               <br />
               <h3>
-                Average{" "}
-                <span style={{ color: "#12939A" }}>n-gram frequency</span>{" "}
+                Average
+                <span style={{ color: "#12939A" }}> n-gram frequency </span>
                 Accuracy
               </h3>
               <p className="graph-explanations">
-                Average accuracy of manipulating{" "}
-                <span style={{ color: "#FF9833" }}>number of n-grams</span>,
+                Average accuracy of manipulating
+                <span style={{ color: "#FF9833" }}> number of n-grams</span>,
                 without controlling for n-gram size
               </p>
               <div className="graphs">
@@ -618,79 +543,6 @@ class App extends Component {
                   items={NGRAM_SIZE}
                 />
               </div>
-              {/* <h3 className="graph-explanations">
-                Accuracy of <code>bigrams</code>
-              </h3>
-              <XYPlot width={300} height={300}>
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis title="test2" position="start" />
-                <YAxis title="test" />
-                <MarkSeries
-                  color="#FF9833"
-                  className="mark-series-example"
-                  strokeWidth={2}
-                  opacity="0.8"
-                  sizeRange={[5, 15]}
-                  animation={MODE[modeIndex]}
-                  data={AVERAGE_NGRAMS}
-                />
-                <MarkSeries
-                  color="#12939A"
-                  className="mark-series-example"
-                  strokeWidth={2}
-                  opacity="0.8"
-                  sizeRange={[5, 15]}
-                  animation={MODE[modeIndex]}
-                  data={myTestData}
-                />
-              </XYPlot>
-              <XYPlot width={300} height={300}>
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <MarkSeries animation={MODE[modeIndex]} data={data} />
-              </XYPlot>
-              <h3 className="graph-explanations">
-                Research <code>source</code> distribution
-              </h3>
-              <XYPlot
-                xDomain={[-5, 5]}
-                yDomain={[-5, 5]}
-                width={300}
-                height={300}
-              >
-                <XAxis />
-                <YAxis />
-                <ArcSeries
-                  animation
-                  radiusDomain={[0, 4]}
-                  data={this.state.data.map(row => {
-                    if (
-                      this.state.value &&
-                      this.state.value.color === row.color
-                    ) {
-                      return {
-                        ...row,
-                        style: { stroke: "black", strokeWidth: "5px" }
-                      };
-                    }
-                    return row;
-                  })}
-                  colorRange={COLORS}
-                  onValueMouseOver={row => this.setState({ value: row })}
-                  onSeriesMouseOut={() => this.setState({ value: false })}
-                  colorType={"category"}
-                />
-                <ArcSeries
-                  animation
-                  radiusType={"literal"}
-                  center={{ x: -2, y: 2 }}
-                  data={this.state.littleData}
-                  colorType={"literal"}
-                />
-              </XYPlot> */}
               <h3>Training/Test Data Sources</h3>
               <p>
                 The medical journal distribution of the 300 research articles
@@ -717,48 +569,16 @@ class App extends Component {
               <h3>Training Word Corpus Distribution</h3>
               <p className="graph-explanations">
                 Breaking down the corpus of words used for training the
-                classification algorithm
+                classification algorithm. <br /> Number of words used for each
+                disease type <br /> Diabetes:&nbsp;
+                <span style={{ color: "#12939A" }}>704,068</span>, CVD:&nbsp;
+                <span style={{ color: "#FF9833" }}>612,992</span>, Cancer:&nbsp;
+                <span style={{ color: "#79C7E3" }}>489,643</span>
+                <br />
+                <strong>Total:&nbsp;</strong>
+                <span style={{ color: "#EF5D28" }}>1,806,703</span>
+                &nbsp;words
               </p>
-              <div className="graphs">
-                <RadarChart
-                  data={WORD_CORPUS_DATA}
-                  tickFormat={t => wideFormat(t)}
-                  startingAngle={0}
-                  domains={[
-                    { name: "mileage", domain: [0, 10] },
-                    {
-                      name: "price",
-                      domain: [2, 16],
-                      tickFormat: t => `$${basicFormat(t)}`,
-                      getValue: d => d.price
-                    },
-                    {
-                      name: "safety",
-                      domain: [5, 10],
-                      getValue: d => d.safety
-                    },
-                    {
-                      name: "performance",
-                      domain: [0, 10],
-                      getValue: d => d.performance
-                    },
-                    {
-                      name: "interior",
-                      domain: [0, 7],
-                      getValue: d => d.interior
-                    },
-                    {
-                      name: "warranty",
-                      domain: [10, 2],
-                      getValue: d => d.warranty
-                    }
-                  ]}
-                  width={500}
-                  height={400}
-                />
-              </div>
-              <h3>Test</h3>
-              <p className="graph-explanations">Some test words</p>
               <div className="graphs">
                 <RadarChart
                   animation
@@ -779,9 +599,9 @@ class App extends Component {
                     }
                   }}
                   margin={{
-                    left: 30,
-                    top: 30,
-                    bottom: 40,
+                    left: 50,
+                    top: 50,
+                    bottom: 50,
                     right: 50
                   }}
                   tickFormat={t => ""}
@@ -793,10 +613,32 @@ class App extends Component {
                   />
                 </RadarChart>
               </div>
+
+              <br />
+              <br />
+            </div>
+
+            <div id="thesis-placeholder">
+              <br />
+              <br />
+              <h1>Undergraduate Thesis</h1>
+              <p className="graph-explanations">
+                <span>
+                  This area will eventually contain the results of my thesis
+                  once they are published
+                  <br />
+                  <br />I am currently completing an undergraduate thesis which
+                  involves using NLP to classify medical texts. Able to achieve
+                  a 91.11% accuracy using n-grams to classify texts through the
+                  Python Natural Language Toolkit (NLTK), utilizing a corpus of
+                  over 1.8 million words for training. More information on my
+                  thesis can be found at
+                  <br />
+                  Check back soon!
+                </span>
+              </p>
             </div>
           </div>
-          <br />
-          <br />
           <div className="screenblock">
             <div id="languages">
               <br />
@@ -869,10 +711,6 @@ class App extends Component {
               </div>
               <div />
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
           </div>
 
           <BottomNavigation
@@ -900,7 +738,7 @@ class App extends Component {
             />
             <BottomNavigationAction
               label="Thesis"
-              href="#thesis"
+              href="#thesis-placeholder"
               icon={<Code />}
             />
             <BottomNavigationAction
@@ -908,7 +746,6 @@ class App extends Component {
               href="#languages"
               icon={<Language />}
             />
-            {/*             <BottomNavigationAction label="Hobbies" icon={<Games />} /> */}
           </BottomNavigation>
         </div>
       </div>
