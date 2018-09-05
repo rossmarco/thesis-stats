@@ -236,12 +236,14 @@ class App extends Component {
         </header>
         <div id="body">
           <div className="screenblock">
-            <div id="about-me">
+            <div id="about-me" name="about-me">
               <br />
               <br />
               <h1>About Me</h1>
               <p className="descriptions">
-                <span>A small introduction about myself</span>
+                <span style={{ color: "#1A3177" }}>
+                  A small introduction about myself
+                </span>
               </p>
               <h2 className="about-me-subheaders">Marco Ross</h2>
               <h3 className="about-me-subheaders">
@@ -272,21 +274,22 @@ class App extends Component {
                       processing within the healthcare domain.
                       <br />
                       <br />I am currently completing an undergraduate thesis in
-                      the domain of bioinformatics which involves using NLP to
-                      classify medical texts related to food and health. Able to
-                      achieve a&nbsp;
-                      <span style={{ color: "#000000" }}>
+                      the domain of bioinformatics. My research involves using
+                      NLP to classify medical texts which are specifically
+                      related to food and health. I am able to achieve a&nbsp;
+                      <span style={{ color: "#1A3177" }}>
                         <b>90.00%</b>
                       </span>
                       &nbsp;accuracy using n-grams to classify texts through the
                       Python Natural Language Toolkit (NLTK), utilizing a corpus
                       of over&nbsp;
-                      <span style={{ color: "#000000" }}>1.8 million</span>
+                      <span style={{ color: "#1A3177" }}>1.8 million</span>
                       &nbsp;words for training. More information on my thesis
-                      can be found at &nbsp;
+                      can be found on &nbsp;
                       <a
                         href="https://github.com/rossmarco/thesis"
                         target={"_blank"}
+                        style={{ color: "#1A3177" }}
                       >
                         GitHub
                       </a>
@@ -752,20 +755,8 @@ class App extends Component {
                   <br />
                   <br />
                   This area will contain results of my thesis in the form of
-                  visual representations of graphs and charts once my findings
+                  visual representations (graphs and charts) once my findings
                   are published
-                  <br />
-                  <br />I am able to achieve a 90.00% average accuracy using
-                  n-grams to classify texts through the Python Natural Language
-                  Toolkit (NLTK), <br />
-                  utilizing a corpus of over 1.8 million words for training.
-                  More information on my thesis can be found on my&nbsp;
-                  <a
-                    href="https://github.com/rossmarco/thesis"
-                    target={"_blank"}
-                  >
-                    GitHub
-                  </a>
                   <br />
                   <br />
                   Check back soon!
@@ -776,19 +767,26 @@ class App extends Component {
 
           <BottomNavigation
             id="bot-nav"
-            showLabels
             value={value}
             onChange={this.handleChange}
+            showLabels
             /*className={classes.root}*/
           >
-            <BottomNavigationAction label="Home" href="#home" icon={<Home />} />
+            <BottomNavigationAction
+              label="Home" //href="#home"
+              showLabel={true}
+              href="#home"
+              icon={<Home />}
+            />
             <BottomNavigationAction
               label="About Me"
+              showLabel={true}
               href="#about-me"
               icon={<Face />}
             />
             <BottomNavigationAction
               label="Experience"
+              showLabel={true}
               href="#work-experience"
               icon={<Work />}
             />
@@ -800,7 +798,6 @@ class App extends Component {
 
             <BottomNavigationAction
               label="Languages"
-              showLabels
               href="#languages"
               icon={<Language />}
             />
