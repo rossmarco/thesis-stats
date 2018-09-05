@@ -28,16 +28,28 @@ import {
   VerticalTimelineElement
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
+import {
+  Link,
+  DirectLink,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller
+} from "react-scroll";
+import firebase from "firebase";
 
 {
-  /* CONSTANTS */
+  /* 
+CONSTANTS
+*/
 }
 const PI = Math.PI;
 const NGRAMS = ["Unigrams", "Bigrams", "Trigrams", "Quadgrams"];
 const NGRAM_SIZE = ["25", "50", "100", "200", "400", "800"];
 const styles = {
   root: {
-    width: "auto"
+    width: "100%"
     /**used to be 1000 */
   }
 };
@@ -93,7 +105,9 @@ const DOMAIN = [
 ];
 
 {
-  /* FUNCTIONS */
+  /* 
+  FUNCTIONS
+*/
 }
 function updateData() {
   const divider = Math.floor(Math.random() * 8 + 3);
@@ -155,6 +169,46 @@ class App extends Component {
     this.state = { index: null };
   }
 
+  componentDidMount() {
+    Events.scrollEvent.register("begin", function() {
+      console.log("begin", arguments);
+    });
+    Events.scrollEvent.register("end", function() {
+      console.log("end", arguments);
+    });
+  }
+
+  scrollTo() {
+    scroller.scrollTo("scroll-to-element", {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart"
+    });
+  }
+  scrollToWithContainer() {
+    let goToContainer = new Promise((resolve, reject) => {
+      Events.scrollEvent.register("end", () => {
+        resolve();
+        Events.scrollEvent.remove("end");
+      });
+
+      scroller.scrollTo("scroll-container", {
+        duration: 800,
+        delay: 0,
+        smooth: "easeInOutQuart"
+      });
+    });
+
+    goToContainer.then(() =>
+      scroller.scrollTo("scroll-container-second-element", {
+        duration: 800,
+        delay: 0,
+        smooth: "easeInOutQuart",
+        containerId: "scroll-container"
+      })
+    );
+  }
+
   render() {
     const { hoveredSection } = this.state;
     const { value } = this.state;
@@ -165,7 +219,7 @@ class App extends Component {
           <div className="headline">
             <h1>MARCO ROSS</h1>
             <h5>Undergraduate Computer Science Student</h5>
-            <p>
+            <p className="headline-icons">
               <span>
                 <IconButton href="https://www.linkedin.com/in/marco-ross/">
                   <ion-icon name="logo-linkedin" id="home-icons" />
@@ -217,11 +271,12 @@ class App extends Component {
                       research, specifically related to natural language
                       processing within the healthcare domain.
                       <br />
-                      <br />I am currently completing an undergraduate thesis
-                      which involves using NLP to classify medical texts. Able
-                      to achieve a&nbsp;
+                      <br />I am currently completing an undergraduate thesis in
+                      the domain of bioinformatics which involves using NLP to
+                      classify medical texts related to food and health. Able to
+                      achieve a&nbsp;
                       <span style={{ color: "#000000" }}>
-                        <b>91.11%</b>
+                        <b>90.00%</b>
                       </span>
                       &nbsp;accuracy using n-grams to classify texts through the
                       Python Natural Language Toolkit (NLTK), utilizing a corpus
@@ -362,7 +417,9 @@ class App extends Component {
               </VerticalTimeline>
             </div>
           </div>
+          {/*
           <div className="screenblock">
+            
             <div id="thesis">
               <br />
               <br />
@@ -441,8 +498,6 @@ class App extends Component {
                       { x: 800, y: 77.78 }
                     ]}
                   />
-                  {/* Put the y axis down here because React produces components based on when they're called
-              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
                   <YAxis title="classification accuracy %" orientation="left" />
                 </XYPlot>
               </div>
@@ -472,18 +527,14 @@ class App extends Component {
                 >
                   <HorizontalGridLines />
                   <VerticalGridLines />
-                  <VerticalBarSeries
-                    data={[{ x: "n-grams", y: 77.78 }]}
-                    onValueMouseOver
-                  />
+                  <VerticalBarSeries data={[{ x: "n-grams", y: 77.78 }]} />
                   <VerticalBarSeries data={[{ x: "n-grams", y: 83.52 }]} />
                   <VerticalBarSeries data={[{ x: "n-grams", y: 76.48 }]} />
                   <VerticalBarSeries data={[{ x: "n-grams", y: 60.93 }]} />
                   <XAxis position="start" />
                   <YAxis title="accuracy %" />
                 </XYPlot>
-                {/* Put the y axis down here because React produces components based on when they're called
-              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
+               
               </div>
               <div className="legends">
                 <DiscreteColorLegend
@@ -533,8 +584,7 @@ class App extends Component {
                   <XAxis position="start" />
                   <YAxis title="accuracy %" />
                 </XYPlot>
-                {/* Put the y axis down here because React produces components based on when they're called
-              and therefore, if Y is called before the lines, the axis title is covered by the lines */}
+                
               </div>
               <div className="legends">
                 <DiscreteColorLegend
@@ -555,10 +605,6 @@ class App extends Component {
                   radiusDomain={[0, 20]}
                   data={mapData(hoveredSection)}
                   labelsAboveChildren
-                  onValueMouseOver={row =>
-                    this.setState({ hoveredSection: row.id })
-                  }
-                  onMouseLeave={() => this.setState({ hoveredSection: false })}
                   width={600}
                   height={300}
                 >
@@ -617,28 +663,10 @@ class App extends Component {
               <br />
               <br />
             </div>
-
-            <div id="thesis-placeholder">
-              <br />
-              <br />
-              <h1>Undergraduate Thesis</h1>
-              <p className="graph-explanations">
-                <span>
-                  This area will eventually contain the results of my thesis
-                  once they are published
-                  <br />
-                  <br />I am currently completing an undergraduate thesis which
-                  involves using NLP to classify medical texts. Able to achieve
-                  a 91.11% accuracy using n-grams to classify texts through the
-                  Python Natural Language Toolkit (NLTK), utilizing a corpus of
-                  over 1.8 million words for training. More information on my
-                  thesis can be found at
-                  <br />
-                  Check back soon!
-                </span>
-              </p>
-            </div>
+            
+            
           </div>
+          */}
           <div className="screenblock">
             <div id="languages">
               <br />
@@ -712,6 +740,39 @@ class App extends Component {
               <div />
             </div>
           </div>
+          <div className="screenblock" style={{ background: "#fff" }}>
+            <div id="thesis-placeholder">
+              <br />
+              <br />
+              <h1>Undergraduate Thesis</h1>
+              <p className="graph-explanations">
+                <span>
+                  I am currently completing an undergraduate thesis which
+                  involves using NLP to classify medical texts.
+                  <br />
+                  <br />
+                  This area will contain results of my thesis in the form of
+                  visual representations of graphs and charts once my findings
+                  are published
+                  <br />
+                  <br />I am able to achieve a 90.00% average accuracy using
+                  n-grams to classify texts through the Python Natural Language
+                  Toolkit (NLTK), <br />
+                  utilizing a corpus of over 1.8 million words for training.
+                  More information on my thesis can be found on my&nbsp;
+                  <a
+                    href="https://github.com/rossmarco/thesis"
+                    target={"_blank"}
+                  >
+                    GitHub
+                  </a>
+                  <br />
+                  <br />
+                  Check back soon!
+                </span>
+              </p>
+            </div>
+          </div>
 
           <BottomNavigation
             id="bot-nav"
@@ -736,15 +797,18 @@ class App extends Component {
               href="#education"
               icon={<School />}
             />
+
+            <BottomNavigationAction
+              label="Languages"
+              showLabels
+              href="#languages"
+              icon={<Language />}
+            />
+
             <BottomNavigationAction
               label="Thesis"
               href="#thesis-placeholder"
               icon={<Code />}
-            />
-            <BottomNavigationAction
-              label="Languages"
-              href="#languages"
-              icon={<Language />}
             />
           </BottomNavigation>
         </div>

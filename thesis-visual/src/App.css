@@ -2,10 +2,16 @@
   text-align: center;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .App-header {
   align-items: center;
   background-color: #000000;
-  background-image: url(./images/bear-computer.jpg);
+  background-image: url(./images/code-image.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -64,7 +70,7 @@
 
 .dots-progress {
   align-items: center;
-  display: flex;
+  display: inline-block;
   flex-wrap: wrap;
 }
 
@@ -87,15 +93,13 @@
   font-size: 50px;
   font-weight: 700;
   max-width: 960px;
-  opacity: 100;
   padding: 30px 25px;
-  position: absolute;
   text-align: center;
   z-index: 1;
-  /*  line-height: 75px; */
-  /*   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
+}
+
+.headline-icons {
+  flex: 1 1;
 }
 
 .icons {
@@ -171,9 +175,32 @@ h2 {
   text-align: center;
 }
 
+/* for iPhone 5/SE */
+@media only screen and (max-width: 325px) {
+  #bot-nav {
+    height: 50px;
+  }
+
+  .headline {
+    height: 300px;
+    font-size: 20px;
+    line-height: 40px;
+  }
+
+  .screenblock {
+    min-height: calc(100vh - 88px);
+  }
+}
+
 @media only screen and (max-width: 480px) {
   #bot-nav {
     height: 100px;
+  }
+
+  .headline {
+    height: 350px;
+    font-size: 28px;
+    line-height: 48px;
   }
 }
 
@@ -181,6 +208,12 @@ h2 {
   #bot-nav {
     flex-wrap: wrap;
     height: 100px;
+  }
+
+  .headline {
+    height: 350px;
+    font-size: 28px;
+    line-height: 48px;
   }
 }
 
