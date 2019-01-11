@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./App.css";
-import Marco from "./images/marco.jpg";
+import Marco from "./images/marco2.jpg";
 import { withStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -227,7 +227,7 @@ class App extends Component {
                 <IconButton href="https://github.com/rossmarco" id="home-icons">
                   <ion-icon name="logo-github" />
                 </IconButton>
-                <IconButton href="mailto:rosmarco@sheridancollege.ca">
+                <IconButton href="mailto:rossnmarco@gmail.com">
                   <ion-icon name="mail" id="home-icons" />
                 </IconButton>
               </span>
@@ -272,15 +272,15 @@ class App extends Component {
                       with a specific focus on natural language processing
                       within the healthcare domain.
                       <br />
-                      <br />I have completed my undergraduate thesis in the
-                      domain of natural language processing (bioinformatics). My
-                      research involves using NLP to classify medical texts
-                      which are specifically related to food and health. I am
+                      <br />I have completed and published my undergraduate
+                      thesis in the domain of natural language processing. My
+                      research involved using NLP to classify medical texts
+                      which are specifically related to food and health. I was
                       able to achieve a&nbsp;
                       <span style={{ color: "#1A3177" }}>
                         <b>90.00%</b>
                       </span>
-                      &nbsp;accuracy using n-grams to classify texts through the
+                      &nbsp;accuracy using bigrams to classify texts through the
                       Python Natural Language Toolkit (NLTK), utilizing a corpus
                       of over&nbsp;
                       <span style={{ color: "#1A3177" }}>1.8 million</span>
