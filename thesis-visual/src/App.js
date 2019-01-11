@@ -273,7 +273,7 @@ class App extends Component {
                       within the healthcare domain.
                       <br />
                       <br />I have completed my undergraduate thesis in the
-                      domain of natrual language processing (bioinformatics). My
+                      domain of natural language processing (bioinformatics). My
                       research involves using NLP to classify medical texts
                       which are specifically related to food and health. I am
                       able to achieve a&nbsp;
@@ -301,6 +301,20 @@ class App extends Component {
                       >
                         here.
                       </a>
+                    </span>
+                    <br />
+                    <br />
+                    <span>
+                      If you're interested in contacting me about career
+                      opportunities, you can&nbsp;
+                      <a
+                        href="https://drive.google.com/file/d/1UUDuL6BVg6tEQjBxvyi--weKYHRofeU8/view?usp=sharing"
+                        target={"_blank"}
+                        style={{ color: "#1A3177" }}
+                      >
+                        <strong>download</strong>
+                      </a>
+                      &nbsp;my resume here.
                     </span>
                   </p>
                 </div>
