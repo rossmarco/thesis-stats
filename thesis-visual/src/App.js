@@ -56,37 +56,37 @@ const styles = {
 const RESEARCH_DIST_DATA = [
   {
     angle: 1,
-    subLabel: "JAMA",
+    subLabel: "AMA",
     id: 1,
     radius: 10
   },
   {
-    angle: 2,
-    subLabel: "American Diabetes Association",
+    angle: 4,
+    subLabel: "Scholars Portal",
     id: 2,
-    radius: 20
+    radius: 35
   },
   {
     angle: 3,
-    label: "NEJM",
+    label: "OLWW",
     id: 3,
     radius: 5
   },
   {
     angle: 4,
-    label: "Lancet",
+    label: "HighWire Press",
     id: 4,
-    radius: 14
+    radius: 17
   },
   {
-    angle: 5,
-    subLabel: "BMJ",
+    angle: 3,
+    subLabel: "Other",
     id: 5,
-    radius: 12
+    radius: 18
   },
   {
     angle: 5,
-    subLabel: "ADD",
+    subLabel: "ProQuest",
     id: 5,
     radius: 12
   }
@@ -218,7 +218,7 @@ class App extends Component {
         <header className="App-header">
           <div className="headline">
             <h1>MARCO ROSS</h1>
-            <h5>Undergraduate Computer Science Student</h5>
+            <h5>Computer Science New Grad</h5>
             <p className="headline-icons">
               <span>
                 <IconButton href="https://www.linkedin.com/in/marco-ross/">
@@ -247,36 +247,36 @@ class App extends Component {
               </p>
               <h2 className="about-me-subheaders">Marco Ross</h2>
               <h3 className="about-me-subheaders">
-                Computer Science Student from Toronto, Canada
+                Software Developer from Toronto, Canada
               </h3>
               <div className="row">
                 <div className="columns">
                   <p>
                     <span>
-                      I'm a Fourth year computer science student from the
-                      Greater Toronto Area. Have just under one year of work
-                      experience at RBC Royal Bank designing enterprise web
-                      applications as well as research experience through
-                      Sheridan College.
+                      I'm a new computer science grad from the Greater Toronto
+                      Area. I have just under one year of work experience at RBC
+                      Royal Bank designing enterprise web applications as well
+                      as research experience through Sheridan College.
                     </span>
                     <br />
                     <br />
                     <span>
                       Adept at designing and developing full stack web and
-                      mobile applications, with a special focus on ASP.NET,
-                      ReactJS, Python and Java.
+                      mobile applications, with a special focus on Python, Java,
+                      ASP.NET, and ReactJS.
                     </span>
                     <br />
                     <br />
                     <span>
-                      I have a particular interest in artificial intelligence
-                      research, specifically related to natural language
-                      processing within the healthcare domain.
+                      I have a particular passion for machine learning research,
+                      with a specific focus on natural language processing
+                      within the healthcare domain.
                       <br />
-                      <br />I am currently completing an undergraduate thesis in
-                      the domain of bioinformatics. My research involves using
-                      NLP to classify medical texts which are specifically
-                      related to food and health. I am able to achieve a&nbsp;
+                      <br />I have completed my undergraduate thesis in the
+                      domain of natrual language processing (bioinformatics). My
+                      research involves using NLP to classify medical texts
+                      which are specifically related to food and health. I am
+                      able to achieve a&nbsp;
                       <span style={{ color: "#1A3177" }}>
                         <b>90.00%</b>
                       </span>
@@ -285,13 +285,21 @@ class App extends Component {
                       of over&nbsp;
                       <span style={{ color: "#1A3177" }}>1.8 million</span>
                       &nbsp;words for training. More information on my thesis
-                      can be found on &nbsp;
+                      can be found on my&nbsp;
                       <a
                         href="https://github.com/rossmarco/thesis"
                         target={"_blank"}
                         style={{ color: "#1A3177" }}
                       >
                         GitHub
+                      </a>
+                      &nbsp; and by reading my paper published&nbsp;
+                      <a
+                        href="http://thesai.org/Downloads/Volume9No11/Paper_1-Exploring_Identifiers_of_Research_Articles.pdf"
+                        target={"_blank"}
+                        style={{ color: "#1A3177" }}
+                      >
+                        here.
                       </a>
                     </span>
                   </p>
@@ -387,13 +395,13 @@ class App extends Component {
                 <VerticalTimelineElement
                   className="vertical-timeline-element--work"
                   id="education"
-                  date="2014 - Present"
+                  date="2014 - 2018"
                   iconStyle={{ background: "#FF9833", color: "#fff" }}
                   icon={<ion-icon class="icons" name="school" />}
                 >
                   <div id="work-experience-details">
                     <h3 className="vertical-timeline-element-title">
-                      Bachelor of Applied Computer Science, Mobile Computing
+                      Bachelor of Computer Science, Mobile Computing
                     </h3>
                     <br />
                     <h4 className="vertical-timeline-element-subtitle">
@@ -420,9 +428,8 @@ class App extends Component {
               </VerticalTimeline>
             </div>
           </div>
-          {/*
+
           <div className="screenblock">
-            
             <div id="thesis">
               <br />
               <br />
@@ -441,7 +448,7 @@ class App extends Component {
                 </strong>
                 <span>
                   , <br />
-                  this graph depicts the varrying degrees of accuracy resulting
+                  this graph depicts the varying degrees of accuracy resulting
                   from different combinations of these two variables
                 </span>
               </p>
@@ -537,7 +544,6 @@ class App extends Component {
                   <XAxis position="start" />
                   <YAxis title="accuracy %" />
                 </XYPlot>
-               
               </div>
               <div className="legends">
                 <DiscreteColorLegend
@@ -587,7 +593,6 @@ class App extends Component {
                   <XAxis position="start" />
                   <YAxis title="accuracy %" />
                 </XYPlot>
-                
               </div>
               <div className="legends">
                 <DiscreteColorLegend
@@ -666,10 +671,7 @@ class App extends Component {
               <br />
               <br />
             </div>
-            
-            
           </div>
-          */}
           <div className="screenblock">
             <div id="languages">
               <br />
@@ -743,27 +745,6 @@ class App extends Component {
               <div />
             </div>
           </div>
-          <div className="screenblock" style={{ background: "#fff" }}>
-            <div id="thesis-placeholder">
-              <br />
-              <br />
-              <h1>Undergraduate Thesis</h1>
-              <p className="graph-explanations">
-                <span>
-                  I am currently completing an undergraduate thesis which
-                  involves using NLP to classify medical texts.
-                  <br />
-                  <br />
-                  This area will contain results of my thesis in the form of
-                  visual representations (graphs and charts) once my findings
-                  are published
-                  <br />
-                  <br />
-                  Check back soon!
-                </span>
-              </p>
-            </div>
-          </div>
 
           <BottomNavigation
             id="bot-nav"
@@ -797,15 +778,15 @@ class App extends Component {
             />
 
             <BottomNavigationAction
-              label="Languages"
-              href="#languages"
-              icon={<Language />}
+              label="Thesis"
+              href="#thesis"
+              icon={<Code />}
             />
 
             <BottomNavigationAction
-              label="Thesis"
-              href="#thesis-placeholder"
-              icon={<Code />}
+              label="Languages"
+              href="#languages"
+              icon={<Language />}
             />
           </BottomNavigation>
         </div>
