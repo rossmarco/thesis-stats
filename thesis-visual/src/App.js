@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./App.css";
 import Marco from "./images/marco2.jpg";
+import Resume from "./components/mross-resume.pdf";
 import { withStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -253,7 +254,7 @@ class App extends Component {
                 <div className="columns">
                   <p>
                     <span>
-                      I'm a new computer science grad from the Greater Toronto
+                      I'm a computer science new grad from the Greater Toronto
                       Area. I have just under one year of work experience at RBC
                       Royal Bank designing enterprise web applications as well
                       as research experience through Sheridan College.
@@ -283,39 +284,39 @@ class App extends Component {
                       &nbsp;accuracy using bigrams to classify texts through the
                       Python Natural Language Toolkit (NLTK), utilizing a corpus
                       of over&nbsp;
-                      <span style={{ color: "#1A3177" }}>1.8 million</span>
-                      &nbsp;words for training. More information on my thesis
-                      can be found on my&nbsp;
-                      <a
-                        href="https://github.com/rossmarco/thesis"
-                        target={"_blank"}
-                        style={{ color: "#1A3177" }}
-                      >
-                        GitHub
-                      </a>
-                      &nbsp; and by reading my paper published&nbsp;
-                      <a
-                        href="http://thesai.org/Downloads/Volume9No11/Paper_1-Exploring_Identifiers_of_Research_Articles.pdf"
-                        target={"_blank"}
-                        style={{ color: "#1A3177" }}
-                      >
-                        here.
-                      </a>
+                      <span style={{ color: "#1A3177" }}>
+                        <strong>1.8 million</strong>
+                      </span>
+                      &nbsp;words for training. More information regarding my
+                      thesis can be found by reading my publication.
                     </span>
                     <br />
                     <br />
                     <span>
                       If you're interested in contacting me about career
-                      opportunities, you can&nbsp;
+                      opportunities, you can find my resume below.
+                    </span>
+                    <br />
+                    <br />
+                    <div id="buttons">
                       <a
                         href="https://drive.google.com/file/d/1UUDuL6BVg6tEQjBxvyi--weKYHRofeU8/view?usp=sharing"
-                        target={"_blank"}
-                        style={{ color: "#1A3177" }}
+                        target="_blank"
+                        type="button"
+                        class="button button2"
                       >
-                        <strong>download</strong>
+                        Download Resume
                       </a>
-                      &nbsp;my resume here.
-                    </span>
+                      &nbsp;
+                      <a
+                        href="http://thesai.org/Downloads/Volume9No11/Paper_1-Exploring_Identifiers_of_Research_Articles.pdf"
+                        target="_blank"
+                        type="button"
+                        class="button button2"
+                      >
+                        Read Publication
+                      </a>
+                    </div>
                   </p>
                 </div>
                 <img id="profile-pic" src={Marco} alt="marco" />
